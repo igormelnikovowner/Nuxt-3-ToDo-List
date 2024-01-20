@@ -3,7 +3,7 @@
     <h2 class="font-bold text-4xl text-center mb-12">
       Доброго времени суток, {{ nickname }}! {{ completed.length ? 'Ваши задачи:' : 'Добавьте новые задачи'}}
     </h2>
-    <div class="flex w-full justify-between mb-8">
+    <div v-if="completed.length || uncompleted.length" class="flex w-full mb-8" :class="!uncompleted.length || !completed.length ? 'justify-center' : 'justify-between'">
       <template v-if="uncompleted.length">
         <div class="w-2/5">
           <div class="mb-4">
@@ -34,8 +34,21 @@
         </div>
       </template>
     </div>
+
+    <div v-else-if="!loading">
+      <h2 class="font-bold text-2xl text-center mb-12">
+        {{ $t('Вы еще не добавили ни одной заметки(((') }}
+      </h2>
+    </div>
+
+    <div v-else>
+      <h2 class="font-bold text-2xl text-center mb-12">
+        {{ $t('Загружаем заметки...') }}
+      </h2>
+    </div>
+
     <div class="flex w-full justify-center">
-      <Button class="bg-blue-500 text-white w-72" type="button" @click="toNoteLayout(notes.length)">
+      <Button class="bg-blue-500 text-white w-72" type="button" @click="toNoteLayout(new Date().getTime())">
         {{ $t('Добавить новую заметку') }}
       </Button>
     </div>
@@ -58,16 +71,25 @@ export default defineComponent({
       layout: 'noteslayout',
     });
     const userStore = useUserStore();
-    const { nickname, notes } = storeToRefs(userStore);
+    const { nickname, notes, getNotes } = storeToRefs(userStore);
+    const loading = ref(true);
 
-    const completed = notes.value.filter((n) => n.isDone);
-    const uncompleted = notes.value.filter((n) => !n.isDone);
+    watch(() => notes.value, () => {
+      loading.value = false;
+    });
+
+    const completed = computed<INote[]>(
+      () => notes.value.filter((n) => n.isDone),
+    );
+    const uncompleted = computed<INote[]>(
+      () => notes.value.filter((n) => !n.isDone),
+    );
 
     const toNoteLayout = (uid?: number) => {
       navigateTo(`/note/${uid}`);
     }
 
-    return { notes, nickname, completed, uncompleted, toNoteLayout };
+    return { notes, nickname, completed, uncompleted, toNoteLayout, getNotes, loading };
   }
 });
 </script>

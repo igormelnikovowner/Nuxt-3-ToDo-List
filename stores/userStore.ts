@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
 import { type IUserStore, type INote, type ITodo } from './state';
+import CryptoJS from 'crypto-js';
+import { key } from './key';
+import type SecureLS from 'secure-ls';
 
 export const useUserStore = defineStore({
   id: 'user-store',
@@ -7,59 +10,32 @@ export const useUserStore = defineStore({
     return {
       uid: 1,
       nickname: 'Lemunruss',
-      notes: [
-        {
-          uid: 1,
-          isDone: true,
-          title: 'Изучить Nuxt',
-          todos: [
-            {
-              uid: 1,
-              isDone: true,
-              title: 'Открыть видео',
-            },
-          ],
-        },
-        {
-          uid: 2,
-          isDone: false,
-          title: 'Изучить Nuxt',
-          todos: [
-            {
-              uid: 1,
-              isDone: false,
-              title: 'Открыть видео',
-            },
-            {
-              uid: 2,
-              isDone: false,
-              title: 'Открыть видео',
-            },
-          ],
-        },
-        {
-          uid: 3,
-          isDone: false,
-          title: 'Изучить Nuxt',
-          todos: [
-            {
-              uid: 1,
-              isDone: false,
-              title: 'Открыть видео',
-            },
-            {
-              uid: 2,
-              isDone: true,
-              title: 'Открыть видео',
-            },
-          ],
-        }
-      ],
+      notes: [] as INote[],
     } as IUserStore;
   },
   actions: {
+    // setNotesToStore(notes: string, ls: SecureLS) {
+    setNotesToStore(notes: string) {
+      const decryptedData = CryptoJS.AES.decrypt(notes, key);
+      const plaintext = decryptedData.toString(CryptoJS.enc.Utf8);
+      this.$state.notes = JSON.parse(plaintext);
+
+
+      // const encryptedData = CryptoJS.AES.encrypt('yourData', key).toString();
+      // ls.set('encryptedData', encryptedData);
+
+      // // Извлекаем и расшифровываем данные
+      // console.log('notes', notes);
+      // this.$state.ls = ls;
+      // const dData = CryptoJS.AES.decrypt(notes, key).toString(CryptoJS.enc.Utf8);
+      // this.$state.notes = JSON.parse(dData);
+      // console.log('dData', dData);
+      // console.log('this.$state.notes', this.$state.notes);
+    },
     addNote(note: INote) {
       this.$state.notes.push(note);
+      const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(this.$state.notes), key);
+      localStorage.setItem('notes', encryptedData);
     },
     editNote(note: INote) {
       const idx = this.$state.notes.findIndex((n) => n.uid === note.uid);
@@ -83,6 +59,7 @@ export const useUserStore = defineStore({
     },
   },
   getters: {
+    getNotes: (state) => state.notes,
     getNote: (state) => (note: number) => state.notes.find((n) => n.uid === note),
     getNoteTodos: (state) => (note: number) => state.notes.find((n) => n.uid === note)?.todos,
     getNoteTodo: (state) => (note: number, todo: number) => state.notes.find((n) => n.uid === note)?.todos.find((t) => t.uid === todo),

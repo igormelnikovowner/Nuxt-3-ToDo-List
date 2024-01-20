@@ -1,5 +1,5 @@
 <template>
-  <input v-model="model" :checked="model" class="w-4" @input="changeInputValue" />
+  <input v-model="model" :checked="model" :disabled='disable' class="w-4 h-4" @input="changeInputValue" />
 </template>
 
 <script lang="ts">
@@ -12,10 +12,17 @@ export default defineComponent({
       type:  Boolean,
       default: false,
     },
+    disable: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, ctx) {
     const model = ref(props.modelValue);
+    watch(() => props.modelValue, () => {
+      model.value = props.modelValue;
+    });
 
     const changeInputValue = () => {
       ctx.emit('update:modelValue', model.value);

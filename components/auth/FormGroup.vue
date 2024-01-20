@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col space-y-2">
       <Label>{{ label }}</Label>
-      <Input :modelValue="modelValue" :type="type" :placeholder="placeholder" @update:modelValue="changeInputValue"/>
+      <Input :model-value="modelValue" :type="type" :placeholder="placeholder" :disable="disable" @update:modelValue="changeInputValue"/>
       <p v-if="errorMessage" class="text-red-500 text-sm">{{ errorMessage }}</p>
   </div>
 </template>
@@ -34,6 +34,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    disable: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     Input,
@@ -44,7 +48,6 @@ export default defineComponent({
     const changeInputValue = (value: String | Number) => {
       ctx.emit('update:modelValue', value)
     };
-
     return { changeInputValue };
   }
 });

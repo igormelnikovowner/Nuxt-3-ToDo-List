@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-between align-center" :class="type === 'note' ? 'pr-8': ''">
-    <div class="flex w-fit align-center">
+    <div class="flex w-fit items-center">
       <span class="mr-2" :class="[todo.isDone && type === 'todo' ? 'line-through' : '', textColor]">
-        {{ `${type === 'todo' ? todo.uid : idx}. ${todo.title}` }}
+        {{ `${idx}. ${todo.title}` }}
       </span>
-      <Checkbox v-if="type === 'todo'" :modelValue="todo.isDone" type="checkbox" @update:modelValue="changeInputValue"/>
+      <Checkbox v-if="type === 'todo'" :modelValue="todo.isDone" :disable="true" type="checkbox" @update:modelValue="changeInputValue"/>
     </div>
 
-    <div class="flex w-fit align-center">
+    <div class="flex w-fit items-center">
       <div class="flex items-center cursor-pointer mr-4">
         <span class="mr-1">
           Edit
