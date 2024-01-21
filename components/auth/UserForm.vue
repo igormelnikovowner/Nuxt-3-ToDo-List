@@ -1,12 +1,12 @@
 <template>
   <form v-bind="$attrs" class="w-full flex flex-col space-y-3" @submit.prevent="processForm">
-    <FormGroup v-if="type === 'signup'" :model-value="userForm.name" type="text" label="Nickname" placeholder="Enter your nickname" :errorMessage="errorBag.name" @update:modelValue="changeName"/>
-    <FormGroup :model-value="userForm.email" type="email" label="Email" placeholder="Enter your email" :errorMessage="errorBag.email" @update:modelValue="changeEmail"/>
-    <FormGroup  :model-value="userForm.password" type="password" label="Password" placeholder="At least 6 characters" :errorMessage="errorBag.password" @update:modelValue="changePass"/>
+    <FormGroup v-if="type === 'signup'" :model-value="userForm.name" type="text" label="Ник" placeholder="Enter your nickname" :errorMessage="errorBag.name" @update:modelValue="changeName"/>
+    <FormGroup :model-value="userForm.email" type="email" label="Емейл" placeholder="Enter your email" :errorMessage="errorBag.email" @update:modelValue="changeEmail"/>
+    <FormGroup  :model-value="userForm.password" type="password" label="Пароль" placeholder="At least 6 characters" :errorMessage="errorBag.password" @update:modelValue="changePass"/>
 
     <div class="text-center">
       <Button class="bg-blue-500 text-white w-56" type="submit">
-        {{ type === "signin" ? "Login" : "Register" }}
+        {{ type === "signin" ? "Войти" : "Зарегистрироваться" }}
       </Button>
     </div>
   </form>

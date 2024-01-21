@@ -4,9 +4,9 @@
       <p class="text-xl sm:text-2xl font-semibold text-slate-50">Дневник</p>
     </div>
 
-    <div class="flex space-x-4 items-center text-xl sm:text-2xl ">
-      <MenuLink v-if="!isLoggedIn" href="/" :class="$route.fullPath === '/' ? 'text-cyan-400 underline' : 'text-gray-50'">Войти</MenuLink>
-      <MenuLink v-if="!isLoggedIn" href="/signup" :class="$route.fullPath === '/signup' ? 'text-cyan-400 underline' : 'text-gray-50'">Зарегистрироваться</MenuLink>
+    <div class="flex space-x-4 items-center text-lg sm:text-2xl ">
+      <MenuLink v-if="!isLoggedIn" href="/" :class="$route.fullPath === '/' ? 'text-cyan-400 underline' : 'text-gray-50'">Вход</MenuLink>
+      <MenuLink v-if="!isLoggedIn" href="/signup" :class="$route.fullPath === '/signup' ? 'text-cyan-400 underline' : 'text-gray-50'">Регистрация</MenuLink>
       <MenuLink v-if="isLoggedIn" href="/" class="text-gray-50 underline" type="signOut" >Выйти</MenuLink>
     </div>
   </header>
