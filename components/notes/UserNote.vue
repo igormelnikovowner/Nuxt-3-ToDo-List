@@ -1,15 +1,15 @@
 <template>
-  <div class="text-xl bg-white shadow-md rounded-md mb-4 pl-8 py-4 border-l-4" :class="borderColor">
+  <div class="text-xl bg-white shadow-md rounded-md mb-2 sm:mb-4 pl-4 sm:pl-8 py-2 sm:py-4 border-l-4" :class="borderColor" style="height: 250px;">
     <TodoTitle :todo="note" :idx="idx" @show-dialog="showDialog"/>
 
-    <div class="mt-4">
-      <p :class="note.isDone ? 'text-emerald-500' : 'text-black'">{{ note.isDone ? '- Задачи которые вы победили! Грац.' :  '- Шаги для выпополнения задачи' }}</p>
+    <div class="mt-2 sm:mt-4">
+      <p class="text-base sm:text-lg" :class="note.isDone ? 'text-emerald-500' : 'text-black'">{{ note.isDone ? '- Задачи которые вы победили! Грац.' :  '- Шаги для выполнения задачи' }}</p>
       <div v-if="note.todos.length" class="flex justtify-between flex-wrap">
-        <div v-for="todo, i in note.todos" :key="todo.uid" class="w-2/5 px-8 py-4">
+        <div v-for="todo, i in note.todos" :key="todo.uid" class="w-full sm:w-2/5 px-4 sm:px-8 py-2 sm:py-4">
           <TodoTitle :todo="todo" :idx="i + 1" type="todo" />
         </div>
       </div>
-      <div v-else class="mt-4 font-bold text-2xl">
+      <div v-else class="mt-2 sm:mt-4 font-bold text-lg sm:text-2xl">
         {{ $t('Нет добавленных задач!') }}
       </div>
     </div>

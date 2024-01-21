@@ -1,5 +1,5 @@
 <template>
-  <input v-model="model" :checked="model" :disabled='disable' type="checkbox" class="w-4 h-4" @input="changeInputValue" />
+  <input v-model="model" :checked="model" :disabled='disable' type="checkbox" class="w-6 h-6" @input="changeInputValue" />
 </template>
 
 <script lang="ts">

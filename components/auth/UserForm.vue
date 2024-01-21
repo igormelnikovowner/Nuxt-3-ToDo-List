@@ -1,6 +1,6 @@
 <template>
   <form v-bind="$attrs" class="w-full flex flex-col space-y-3" @submit.prevent="processForm">
-    <FormGroup v-if="type === 'signup'" :model-value="userForm.name" type="text" label="Full Name" placeholder="Enter your nickname" :errorMessage="errorBag.name" @update:modelValue="changeName"/>
+    <FormGroup v-if="type === 'signup'" :model-value="userForm.name" type="text" label="Nickname" placeholder="Enter your nickname" :errorMessage="errorBag.name" @update:modelValue="changeName"/>
     <FormGroup :model-value="userForm.email" type="email" label="Email" placeholder="Enter your email" :errorMessage="errorBag.email" @update:modelValue="changeEmail"/>
     <FormGroup  :model-value="userForm.password" type="password" label="Password" placeholder="At least 6 characters" :errorMessage="errorBag.password" @update:modelValue="changePass"/>
 
