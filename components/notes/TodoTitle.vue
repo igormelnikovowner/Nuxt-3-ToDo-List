@@ -1,21 +1,21 @@
 <template>
-  <div class="flex justify-between align-center" :class="type === 'view' ? 'pr-8': ''">
-    <div class="flex w-fit items-center">
+  <div class="flex justify-between align-center" :class="type === 'view' ? 'pr-4 sm:pr-8': ''">
+    <div class="flex w-fit items-center text-base sm:text-lg">
       <span class="mr-2 truncate" :class="[todo.isDone && type === 'todo' ? 'line-through' : '', textColor]" style="max-width: 150px;">
         {{ `${idx}. ${todo.title}` }}
       </span>
       <Checkbox v-if="type === 'todo'" :modelValue="todo.isDone" :disable="true" type="checkbox"/>
     </div>
 
-    <div v-if="type === 'view'" class="flex w-fit items-center">
-      <div class="flex items-center cursor-pointer mr-4" @click="editNote">
-        <span class="mr-1">
+    <div v-if="type === 'view'" class="text-base sm:text-lg flex w-fit items-center">
+      <div class="flex items-center cursor-pointer mr-2 sm:mr-4" @click="editNote">
+        <span class="mr-1 hidden sm:block">
           Редактировать
         </span>
         <Icon icon="i-mdi-pencil-outline" />
       </div>
       <div class="flex items-center cursor-pointer" @click="deleteNote">
-        <span class="mr-1">
+        <span class="mr-1 hidden sm:block">
           Удалить
         </span>
         <Icon icon="i-mdi-delete-outline" />

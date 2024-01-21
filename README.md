@@ -1,7 +1,7 @@
 # Nuxt-3-ToDo-List
 
 Node Version
-This project requires Node.js version 14.15.1.
+This project requires Node.js version 16.17.0.
 
 Running the Project
 To run this project, follow these steps in your terminal:

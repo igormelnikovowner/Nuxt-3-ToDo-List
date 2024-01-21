@@ -2,7 +2,8 @@ import { defineStore, createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { type IUserStore, type INote, type ITodo } from './state';
 import CryptoJS from 'crypto-js';
-import { key } from './key';
+import forge from 'node-forge';
+import { key, publicKey, privateKey } from './key';
 import SecureLS from 'secure-ls';
 
 const pinia = createPinia()
@@ -27,7 +28,9 @@ export const useUserStore = defineStore('user-store', {
     setNotesToStore(notes: string) {
       const decryptedData = CryptoJS.AES.decrypt(notes, key);
       const plaintext = decryptedData.toString(CryptoJS.enc.Utf8);
+      // const decryptedData = forge.pki.decrypt(forge.util.decode64(notes), privateKey);
       this.$state.notes = JSON.parse(plaintext);
+      // this.$state.notes = JSON.parse(decryptedData);
     },
     addNote(note: INote) {
       this.$state.notes.push(note);
@@ -67,6 +70,7 @@ export const useUserStore = defineStore('user-store', {
         }
       }
       const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(this.$state.notes), key).toString();
+      // const encryptedData = forge.pki.publicKey.encrypt(JSON.stringify(this.$state.notes), publicKey).toString();
       this.$state.ls?.set('notes', encryptedData);
     }
   },

@@ -1,15 +1,18 @@
 <template>
-  <div class="flex items-end mb-4">
-    <div class="flex items-end mr-4">
-      <input v-model="model" :checked="model" type="checkbox" class="w-10 h-10" @input="changeTodoStatus" />
+  <div class="flex items-end mb-2 sm:mb-4">
+    <div class="flex items-center sm:items-end mr-2 sm:mr-4 pb-2 sm:pb-0 ">
+      <input v-model="model" :checked="model" type="checkbox" class="w-6 sm:w-10 h-6 sm:h-10" @input="changeTodoStatus" />
     </div>
-    <FormGroup v-model="todo.title" class="w-2/3 mr-4" type="text" label="todo" placeholder="Введите название задачи" />
-    <div v-if="type !== 'add'" class="flex text-xl font-bold cursor-pointer pt-5 mr-4" @click="editTd">
-      <span>
-        {{ $t('Изменить название Todo') }}
+    <FormGroup v-model="titlemodel" class="w-2/3 mr-2 sm:mr-4" type="text" label="Задача" placeholder="Введите название задачи" @update:modelValue="changeTodo" />
+    <div v-if="type !== 'add' && reverseType" class="flex text-lg sm:text-xl font-bold cursor-pointer pt-3 sm:pt-5 mr-2 sm:mr-4 underline" @click="backToPrevState">
+      <span v-if="reverseType === 'back'">
+        {{ $t('Вернуть название Todo') }}
+      </span>
+      <span v-else>
+        {{ $t('Отменить изменение Todo') }}
       </span>
     </div>
-    <div class="flex text-xl font-bold cursor-pointer pt-5"  @click="deleteTd">
+    <div class="flex text-lg sm:text-xl font-bold cursor-pointer pt-6 sm:pt-5"  @click="deleteTd">
       <span>
         {{ $t('Удалить') }}
       </span>
@@ -38,12 +41,17 @@ export default defineComponent({
       type: String,
       default: 'add',
     },
+    reverseType: {
+      type: String,
+      default: '',
+    },
   },
   components: {
     FormGroup,
   },
-  emits: ['change-todo-status', 'remove-todo', 'remove-new-todo', 'edit-new-todo', 'edit-todo'],
+  emits: ['change-todo-status', 'remove-todo', 'remove-new-todo', 'back-prev-state', 'change-todo'],
   setup(props, ctx) {
+    const titlemodel = ref(props.todo.title);
     const userStore = useUserStore();
     const { editTodo, deleteTodo } = userStore;
 
@@ -63,15 +71,12 @@ export default defineComponent({
       }
     };
 
-    const editTd = () => {
-      console.log('editTodo', props.type);
-      if (props.type !== 'add') {
-        console.log('edit-todo');
-        ctx.emit('edit-todo', { uid: props.todo.uid });
-      } else {
-        console.log('edit-new-todo');
-        ctx.emit('edit-new-todo', { uid: props.todo.uid });
-      }
+    const changeTodo = () => {
+      ctx.emit('change-todo', props.todo.title);
+    };
+
+    const backToPrevState = () => {
+      ctx.emit('back-prev-state', { uid: props.noteUid, todo: props.todo.uid });
     };
 
     const deleteTd = () => {
@@ -82,7 +87,7 @@ export default defineComponent({
       }
     };
 
-    return { model, changeTodoStatus, editTd, deleteTd };
+    return { titlemodel, model, changeTodoStatus, backToPrevState, deleteTd, changeTodo };
   }
 });
 </script>
