@@ -1,22 +1,22 @@
 <template>
-  <div class="flex justify-between align-center" :class="type === 'note' ? 'pr-8': ''">
+  <div class="flex justify-between align-center" :class="type === 'view' ? 'pr-8': ''">
     <div class="flex w-fit items-center">
-      <span class="mr-2" :class="[todo.isDone && type === 'todo' ? 'line-through' : '', textColor]">
+      <span class="mr-2 truncate" :class="[todo.isDone && type === 'todo' ? 'line-through' : '', textColor]" style="max-width: 150px;">
         {{ `${idx}. ${todo.title}` }}
       </span>
-      <Checkbox v-if="type === 'todo'" :modelValue="todo.isDone" :disable="true" type="checkbox" @update:modelValue="changeInputValue"/>
+      <Checkbox v-if="type === 'todo'" :modelValue="todo.isDone" :disable="true" type="checkbox"/>
     </div>
 
-    <div class="flex w-fit items-center">
-      <div class="flex items-center cursor-pointer mr-4">
+    <div v-if="type === 'view'" class="flex w-fit items-center">
+      <div class="flex items-center cursor-pointer mr-4" @click="editNote">
         <span class="mr-1">
-          Edit
+          Редактировать
         </span>
         <Icon icon="i-mdi-pencil-outline" />
       </div>
-      <div class="flex items-center cursor-pointer">
+      <div class="flex items-center cursor-pointer" @click="deleteNote">
         <span class="mr-1">
-          Delete
+          Удалить
         </span>
         <Icon icon="i-mdi-delete-outline" />
       </div>
@@ -40,7 +40,7 @@ export default defineComponent({
     },
     type: {
       type: String,
-      default: 'note'
+      default: 'view'
     },
     idx: {
       type: Number,
@@ -51,16 +51,21 @@ export default defineComponent({
     Icon,
     Checkbox,
   },
-  setup(props) {
-    const changeInputValue = (val: boolean) => {
-      console.log('val', val);
-    };
-
+  emits: ['show-dialog'],
+  setup(props, ctx) {
     const textColor = computed<string>(
       () => props.todo.isDone ? 'text-emerald-500' : 'text-black',
     );
 
-    return { changeInputValue, textColor };
+    const editNote = () => {
+      navigateTo(`/note/${props.todo.uid}`);
+    };
+
+    const deleteNote = () => {
+      ctx.emit('show-dialog', { action: 'delete', uid: props.todo.uid});
+    };
+
+    return { textColor, editNote, deleteNote };
   }
 });
 </script>

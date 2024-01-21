@@ -5,22 +5,19 @@
 </template>
 
 <script lang="ts">
+import SecureLS from 'secure-ls';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
     const userStore = useUserStore();
-    const { setNotesToStore } = userStore;
-
+    const { setNotesToStore, setLsToStore } = userStore;
     onMounted(() => {
-      if (localStorage.getItem('notes')) {
-        setNotesToStore(localStorage.getItem('notes')!);
+      const ls = new SecureLS({ encodingType: 'aes', encryptionSecret: key });
+      if (ls.get('notes')) {
+        setNotesToStore(ls.get('notes'));
       }
-      // var ls = new SecureLS({ encodingType: 'aes', isCompression: false, encryptionSecret: key });
-
-      // if (ls.get('encryptedData')) {
-      //   setNotesToStore(ls.get('encryptedData'), ls);
-      // }
+      setLsToStore(ls);
     })
     return {};
   }

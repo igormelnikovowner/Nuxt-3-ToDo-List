@@ -4,6 +4,7 @@ export interface IUserStore {
   nickname: string;
   notes: INote[];
   ls: SecureLS | null;
+  isLoading: boolean;
 };
 
 export interface INote {

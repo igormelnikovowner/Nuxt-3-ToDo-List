@@ -3,14 +3,20 @@
 @tailwind utilities;
 
 :root {
-   --text-primary: #4e4e4e;
-   --text-default-size: 16px;
-   --background: #f6fafd;
+  --text-primary: #4e4e4e;
+  --text-default-size: 16px;
+  --background: #f6fafd;
 }
 
 body, html {
-    font-family: 'Nunito';
-    color: var(--text-primary);
-    font-size: var(--text-default-size);
-    background-color: var(--background);
+  font-family: 'Nunito';
+  color: var(--text-primary);
+  font-size: var(--text-default-size);
+  background-color: var(--background);
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

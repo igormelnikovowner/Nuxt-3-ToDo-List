@@ -9,7 +9,4 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  experimental: {
-    componentIslands: true,
-  }
 })

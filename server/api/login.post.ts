@@ -10,7 +10,6 @@ export default defineEventHandler(async(event) => {
   try {
     const options = {
       maxAge: expiresIn,
-      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
     };
