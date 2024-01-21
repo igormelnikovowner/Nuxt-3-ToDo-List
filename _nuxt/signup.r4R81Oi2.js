@@ -1,0 +1,1 @@
+import{U as e}from"./UserForm.rYWS9YE4.js";import{n as s,_ as r,q as t,s as n,o as p}from"./entry.c8Fz298c.js";import"./useAuth.dquwDQh6.js";import"./FormGroup.PgGvA-sy.js";import"./Button.CUEB_LMa.js";const c=s({components:{UserForm:e},setup(){}});function m(a,i,_,f,u,d){const o=n("UserForm");return p(),t(o,{type:"signup"})}const g=r(c,[["render",m]]);export{g as default};

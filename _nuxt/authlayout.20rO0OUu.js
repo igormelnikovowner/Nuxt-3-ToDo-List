@@ -1,0 +1,1 @@
+import{_ as t}from"./index.iTWOr5P3.js";import{_ as a,c as n,b as s,a as c,K as r,o as _}from"./entry.c8Fz298c.js";import"./nuxt-link.xE23uBMR.js";import"./useAuth.dquwDQh6.js";const m={},l={class:"max-w-xl mx-auto px-4 py-16"};function p(e,u){const o=t;return _(),n("div",null,[s(o),c("main",l,[r(e.$slots,"default")])])}const h=a(m,[["render",p]]);export{h as default};

@@ -1,0 +1,1 @@
+import{_ as t,o,c as s,K as n,H as r}from"./entry.c8Fz298c.js";const a={};function c(e,l){return o(),s("button",r(e.$attrs,{class:"px-2 sm:px-5 px-1 sm:py-2 rounded-md outline-none shadow text-base sm:text-lg font-bold"}),[n(e.$slots,"default")],16)}const m=t(a,[["render",c]]);export{m as B};
